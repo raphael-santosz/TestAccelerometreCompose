@@ -73,7 +73,6 @@ class MainActivity : ComponentActivity(), SensorEventListener {
     private fun getAccelerometer(event: SensorEvent) {
         val accelerationSquareRootThreshold = 200
         val timeThreashold = 1000
-
         val values = event.values
 
         val x = values[0]
@@ -99,8 +98,6 @@ class MainActivity : ComponentActivity(), SensorEventListener {
     }
 }
 
-
-//@SuppressLint("UnrememberedMutableState")
 @Composable
 fun SensorsInfo(color: MutableState<Boolean> ) {
     Card(
