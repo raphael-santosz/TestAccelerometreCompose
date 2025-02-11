@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">TestAccelerometreCompose</string>
+    <string name="shake">Shake to get a toast and to switch color</string>
+    <string name="shuffed">Device was shuffed</string>
+    <string name="changAcc">Un canvi en la precisio del sensor de llum ha estat produit. Nou valor enter = %d </string>
+</resources>
