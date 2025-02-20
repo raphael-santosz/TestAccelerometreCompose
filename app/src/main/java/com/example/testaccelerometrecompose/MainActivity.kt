@@ -23,6 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -145,6 +148,9 @@ fun SensorsInfo(
     lightValue: MutableState<Float>,
     intensityLevel: MutableState<String>
 ) {
+    // 🔹 List to store previous light sensor values
+    val lightHistory = remember { mutableStateListOf<String>() }
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         // Upper section: changes color based on accelerometer input
@@ -179,7 +185,7 @@ fun SensorsInfo(
             }
         }
 
-        // Lower section: light sensor information
+        // Lower section: light sensor information (Scrollable history)
         Card(
             modifier = Modifier
                 .fillMaxSize()
@@ -197,8 +203,16 @@ fun SensorsInfo(
                 if (lightSensor != null) {
                     Text(text = "Light Sensor Available")
                     Text(text = "Max Range: ${lightSensor.maximumRange}")
-                    Text(text = "New value light sensor = ${lightValue.value} lx")
-                    Text(text = intensityLevel.value)
+
+                    // 🔹 Adding new values to history when the sensor updates
+                    LaunchedEffect(lightValue.value) {
+                        lightHistory.add("New value: ${lightValue.value} lx - ${intensityLevel.value}")
+                    }
+
+                    // 🔹 Display all historical light sensor values
+                    lightHistory.forEach { value ->
+                        Text(text = value)
+                    }
                 } else {
                     Text(text = "Sorry, there is no light sensor")
                 }
